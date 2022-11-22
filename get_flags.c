@@ -1,35 +1,30 @@
 #include "main.h"
 
 /**
- * get_flags - Calculates active flags
- * @format: Formatted string in which to print the arguments
- * @i: take a parameter.
- * Return: Flags:
+ * get_flags - determines which flags to set based on the format strings
+ * @elem: char parameter
+ * @f: flag_t parameter
+ *
+ * Return: return code
  */
-int get_flags(const char *format, int *i)
+int get_flags(char elem, flag_t *f)
 {
-	/* - + 0 # ' ' */
-	/* 1 2 4 8  16 */
-	int j, curr_i;
-	int flags = 0;
-	const char FLAGS_CH[] = {'-', '+', '0', '#', ' ', '\0'};
-	const int FLAGS_ARR[] = {F_MINUS, F_PLUS, F_ZERO, F_HASH, F_SPACE, 0};
+	int i = 0;
 
-	for (curr_i = *i + 1; format[curr_i] != '\0'; curr_i++)
+	switch (elem)
 	{
-		for (j = 0; FLAGS_CH[j] != '\0'; j++)
-			if (format[curr_i] == FLAGS_CH[j])
-			{
-				flags |= FLAGS_ARR[j];
-				break;
-			}
-
-		if (FLAGS_CH[j] == 0)
+		case '+':
+			f->plus = 1;
+			i = 1;
+			break;
+		case ' ':
+			f->space = 1;
+			i = 1;
+			break;
+		case '#':
+			f->hash = 1;
+			i = 1;
 			break;
 	}
-
-	*i = curr_i - 1;
-
-	return (flags);
+	return (i);
 }
-
